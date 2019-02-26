@@ -4,8 +4,8 @@ defmodule ExMetrics.Statsd.Worker do
   alias ExMetrics.Config
 
   def start_link() do
-    set_up_config()
-
+    set_up_statix()
+q
     connection =
       case Config.send_metrics?() do
         true -> ExMetrics.Statsd.StatixConnection
@@ -23,7 +23,8 @@ defmodule ExMetrics.Statsd.Worker do
     end)
   end
 
-  defp set_up_config do
+  defp set_up_statix do
     Application.put_env(:statix, :host, Config.statsd_host())
+    Application.put_env(:statix, :port, Config.statsd_port())
   end
 end

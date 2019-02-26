@@ -1,18 +1,13 @@
 defmodule ExMetrics do
-  alias ExMetrics.{Config}
 
   @stat_types [:timing, :increment, :decrement, :gauge, :set, :histogram]
 
   @stat_types
   |> Enum.each(fn stat_type ->
     def unquote(stat_type)(key, value, opts \\ []) do
-      ExMetrics.Statsd.Worker.record({unquote(stat_type), [key, value, options(opts)]})
+      ExMetrics.Statsd.Worker.record({unquote(stat_type), [key, value, opts]})
     end
   end)
-
-  defp options(opts) do
-    Keyword.merge(opts, tags: Config.tags())
-  end
 
   defmacro timeframe(key, do: yield) do
     quote do

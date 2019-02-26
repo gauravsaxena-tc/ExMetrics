@@ -4,11 +4,11 @@ defmodule ExMetrics.Config do
   end
 
   def statsd_host do
-    Application.get_env(:ex_metrics, :statsd_host, "localhost:8125")
+    Application.get_env(:ex_metrics, :statsd_host, "localhost")
   end
 
-  def tags do
-    Application.fetch_env!(:ex_metrics, :dimensions)
-    |> Enum.map(fn {key, value} -> "#{key}:#{value}" end)
+  @spec statsd_port() :: any()
+  def statsd_port do
+    Application.get_env(:ex_metrics, :statsd_port, 8125)
   end
 end
