@@ -5,7 +5,7 @@ defmodule ExMetrics.Statsd.Worker do
 
   def start_link() do
     set_up_statix()
-q
+
     connection =
       case Config.send_metrics?() do
         true -> ExMetrics.Statsd.StatixConnection
