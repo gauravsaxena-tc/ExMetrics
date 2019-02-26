@@ -1,11 +1,13 @@
 defmodule ExMetrics do
+  alias ExMetrics.DefinedMetrics
 
   @stat_types [:timing, :increment, :decrement, :gauge, :set, :histogram]
 
   @stat_types
   |> Enum.each(fn stat_type ->
-    def unquote(stat_type)(key, value, opts \\ []) do
-      ExMetrics.Statsd.Worker.record({unquote(stat_type), [key, value, opts]})
+    def unquote(stat_type)(metric, value, opts \\ []) do
+      DefinedMetrics.raise_if_undefined_metric!(metric)
+      ExMetrics.Statsd.Worker.record({unquote(stat_type), [metric, value, opts]})
     end
   end)
 
