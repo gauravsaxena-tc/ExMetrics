@@ -6,9 +6,10 @@ defmodule Test.Support.FakePlugApp do
   plug :match
   plug :dispatch
 
-  get _ do
+  get "/:status" do
     :timer.sleep(50)
+
     conn
-    |> send_resp(200, "Hey!")
+    |> send_resp(String.to_integer(status), "Hey!")
   end
 end
