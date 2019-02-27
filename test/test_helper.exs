@@ -1,2 +1,2 @@
 Mox.defmock(ExMetrics.Statsd.StatixConnectionMock, for: ExMetrics.Statsd.StatixConnection)
-ExUnit.start()
+ExUnit.start(trace: true)
