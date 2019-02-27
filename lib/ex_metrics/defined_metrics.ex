@@ -13,12 +13,17 @@ defmodule ExMetrics.DefinedMetrics do
   end
 
   defp timing_metrics do
-    [:"timings.page"]
+    [:page] ++ status_codes()
+    |> Enum.map(fn status_code -> :"web.response.timing.#{status_code}" end)
   end
 
   defp response_code_metrics do
-    [200, 202, 301, 302, 404, 408, 500, 501, 502]
-    |> Enum.map(fn status_code -> :"responses.#{status_code}" end)
+    status_codes()
+    |> Enum.map(fn status_code -> :"web.response.status.#{status_code}" end)
+  end
+
+  defp status_codes do
+    Enum.to_list 200..599
   end
 
   def raise_if_undefined_metric!(metric) do
@@ -27,7 +32,7 @@ defmodule ExMetrics.DefinedMetrics do
     end
   end
 
-  defp client_defined_metrics do
+  def client_defined_metrics do
     Application.get_env(:ex_metrics, :metrics, [])
   end
 
