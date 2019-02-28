@@ -1,9 +1,9 @@
 defmodule ExMetrics.Statsd.Worker do
-  use Agent
+  use GenServer
 
   alias ExMetrics.Config
 
-  def start_link() do
+  def init(:ok) do
     set_up_statix()
 
     connection =
@@ -14,13 +14,16 @@ defmodule ExMetrics.Statsd.Worker do
 
     connection.init()
 
-    Agent.start_link(fn -> connection end, name: __MODULE__)
+    {:ok, connection}
   end
 
-  def record({statix_command, [name, value, opts]}) do
-    Agent.get(__MODULE__, fn connection ->
-      apply(connection, statix_command, [name, value, opts])
-    end)
+  def start_link do
+    GenServer.start_link(__MODULE__, :ok, name: __MODULE__)
+  end
+
+  def handle_cast({statix_command, [metric, value, opts]}, connection) do
+    apply(connection, statix_command, [metric, value, opts])
+    {:noreply, connection}
   end
 
   defp set_up_statix do

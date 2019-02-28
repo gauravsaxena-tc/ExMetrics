@@ -7,7 +7,7 @@ defmodule ExMetrics do
   |> Enum.each(fn stat_type ->
     def unquote(stat_type)(metric, value \\ 1, opts \\ []) do
       DefinedMetrics.raise_if_undefined_metric!(metric)
-      ExMetrics.Statsd.Worker.record({unquote(stat_type), [metric, value, opts]})
+      GenServer.cast(ExMetrics.Statsd.Worker, {unquote(stat_type), [metric, value, opts]})
     end
   end)
 
