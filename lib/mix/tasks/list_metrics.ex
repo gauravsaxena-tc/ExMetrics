@@ -2,15 +2,15 @@ defmodule Mix.Tasks.ListMetrics do
   use Mix.Task
 
   def run(_) do
-    IO.puts """
+    IO.puts("""
     ############################################################
     Default metrics:
-    #{display default_metrics()}
+    #{display(default_metrics())}
 
     Custom defined metrics:
-    #{display ExMetrics.DefinedMetrics.client_defined_metrics()}
+    #{display(ExMetrics.DefinedMetrics.client_defined_metrics())}
     ############################################################
-    """
+    """)
   end
 
   defp default_metrics() do
