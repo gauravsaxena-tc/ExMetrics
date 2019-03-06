@@ -1,5 +1,4 @@
 defmodule ExMetrics.DefinedMetrics do
-
   def defined?(metric) do
     metric in defined_metrics()
   end
@@ -13,17 +12,17 @@ defmodule ExMetrics.DefinedMetrics do
   end
 
   defp timing_metrics do
-    [:page] ++ status_codes()
-    |> Enum.map(fn status_code -> :"web.response.timing.#{status_code}" end)
+    ([:page] ++ status_codes())
+    |> Enum.map(fn status_code -> "web.response.timing.#{status_code}" end)
   end
 
   defp response_code_metrics do
     status_codes()
-    |> Enum.map(fn status_code -> :"web.response.status.#{status_code}" end)
+    |> Enum.map(fn status_code -> "web.response.status.#{status_code}" end)
   end
 
   defp status_codes do
-    Enum.to_list 200..599
+    Enum.to_list(200..599)
   end
 
   def raise_if_undefined_metric!(metric) do
@@ -44,7 +43,7 @@ defmodule ExMetrics.DefinedMetrics do
     raise """
     Metric '#{metric}' is not defined in your config.
     Define it like this:
-    config :ex_metrics, metrics: [:#{metric}]
+    config :ex_metrics, metrics: ["#{metric}"]
     """
   end
 end

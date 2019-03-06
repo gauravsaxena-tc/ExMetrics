@@ -3,8 +3,7 @@
 use Mix.Config
 
 config :ex_metrics,
-  metrics: [:test_metric_name, :time_await]
-
+  metrics: ["test_metric_name", "time_await"]
 
 if File.regular?("config/#{Mix.env()}.exs") do
   import_config "#{Mix.env()}.exs"

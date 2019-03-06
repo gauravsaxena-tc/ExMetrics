@@ -1,10 +1,9 @@
 defmodule Test.Support.FakePlugApp do
-  
   use Plug.Router
-  plug ExMetrics.Plug.PageMetrics
+  plug(ExMetrics.Plug.PageMetrics)
 
-  plug :match
-  plug :dispatch
+  plug(:match)
+  plug(:dispatch)
 
   get "/:status" do
     :timer.sleep(50)

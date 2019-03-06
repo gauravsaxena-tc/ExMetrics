@@ -5,9 +5,14 @@ defmodule ExMetrics do
 
   @stat_types
   |> Enum.each(fn stat_type ->
-    def unquote(stat_type)(metric, value \\ 1, opts \\ []) do
+    def unquote(stat_type)(metric, value \\ 1, opts \\ [])
+        when is_binary(metric) and is_list(opts) and (is_integer(value) or is_float(value)) do
       DefinedMetrics.raise_if_undefined_metric!(metric)
-      GenServer.cast(ExMetrics.Statsd.Worker, {unquote(stat_type), [metric, value, opts]})
+
+      GenServer.cast(
+        ExMetrics.Statsd.Worker,
+        {unquote(stat_type), [metric, Kernel.trunc(value), opts]}
+      )
     end
   end)
 

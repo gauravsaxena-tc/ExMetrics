@@ -9,13 +9,14 @@ defmodule ExMetrics.Application do
   end
 
   defp children(env: :test) do
-    children(env: :prod) ++ [
-      Plug.Cowboy.child_spec(
-        scheme: :http,
-        plug: Test.Support.FakePlugApp,
-        options: [port: 8300]
-      )
-    ]
+    children(env: :prod) ++
+      [
+        Plug.Cowboy.child_spec(
+          scheme: :http,
+          plug: Test.Support.FakePlugApp,
+          options: [port: 8300]
+        )
+      ]
   end
 
   defp children(_) do
