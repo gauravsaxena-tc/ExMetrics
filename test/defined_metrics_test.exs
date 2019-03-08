@@ -1,26 +1,21 @@
 defmodule Test.ExMetrics.DefinedMetrics do
   use ExUnit.Case
   alias ExMetrics.DefinedMetrics
+  import ExUnit.CaptureLog
+  require Logger
 
-  setup do
-    Application.put_env(:ex_metrics, :raise_on_undefined_metrics, true)
+  @metric "undefined_metric_name"
+  @log_msg "Metric 'undefined_metric_name' is not defined in your config.\nDefine it like this:\nconfig :ex_metrics, metrics: [\"undefined_metric_name\"]\n"
+
+  test "logs unspecified metric" do
+    assert capture_log(fn ->
+      DefinedMetrics.log_if_undefined_metric(@metric)
+    end) =~ @log_msg
   end
 
-  test "raises error" do
-    assert_raise(
-      RuntimeError,
-      "Metric 'undefined_metric_name' is not defined in your config.\nDefine it like this:\nconfig :ex_metrics, metrics: [:undefined_metric_name]\n",
-      fn -> DefinedMetrics.raise_if_undefined_metric!(:undefined_metric_name) end
-    )
-  end
-
-  describe "option raise_on_undefined_metrics = false" do
-    setup do
-      Application.put_env(:ex_metrics, :raise_on_undefined_metrics, false)
-    end
-
-    test "does not raise error" do
-      DefinedMetrics.raise_if_undefined_metric!(:undefined_metric_name)
-    end
+  test "logs unspecified metric when using ExMetrics library interface" do
+    assert capture_log(fn ->
+      ExMetrics.increment(@metric)
+    end) =~ @log_msg
   end
 end

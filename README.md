@@ -11,6 +11,5 @@ Example:
 ```
 config :ex_metrics,
   metrics: ["metric_one", "another_metric"],
-  send_metrics: Boolean,
-  raise_on_undefined_metrics: Boolean (recommended to be set to true on test & dev. defaults to false)
+  send_metrics: Boolean
 ```
