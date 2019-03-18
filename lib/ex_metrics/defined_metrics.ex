@@ -1,4 +1,6 @@
 defmodule ExMetrics.DefinedMetrics do
+  require Logger
+
   def defined?(metric) do
     metric in defined_metrics()
   end
@@ -25,25 +27,17 @@ defmodule ExMetrics.DefinedMetrics do
     Enum.to_list(200..599)
   end
 
-  def raise_if_undefined_metric!(metric) do
-    if raise_on_undefined_metrics?() and not defined?(metric) do
-      raise_undefined_metric!(metric)
-    end
-  end
-
   def client_defined_metrics do
     Application.get_env(:ex_metrics, :metrics, [])
   end
 
-  defp raise_on_undefined_metrics? do
-    Application.get_env(:ex_metrics, :raise_on_undefined_metrics, false)
-  end
-
-  defp raise_undefined_metric!(metric) do
-    raise """
-    Metric '#{metric}' is not defined in your config.
-    Define it like this:
-    config :ex_metrics, metrics: ["#{metric}"]
-    """
+  def log_if_undefined_metric(metric) do
+    if not defined?(metric) do
+      Logger.info("""
+      Metric '#{metric}' is not defined in your config.
+      Define it like this:
+      config :ex_metrics, metrics: ["#{metric}"]
+      """)
+    end
   end
 end
