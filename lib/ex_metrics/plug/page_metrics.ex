@@ -6,6 +6,7 @@ defmodule ExMetrics.Plug.PageMetrics do
 
   def call(conn, _opts) do
     before_time = :os.timestamp()
+    ExMetrics.increment("web.request.count")
 
     register_before_send(conn, fn conn ->
       after_time = :os.timestamp()

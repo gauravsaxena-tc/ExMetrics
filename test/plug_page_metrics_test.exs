@@ -23,6 +23,7 @@ defmodule Test.ExMetrics.Plug.StatusCode do
                             when timing >= 50 and timing < 60 ->
         :ok
       end)
+      |> expect(:increment, fn "web.request.count", 1, [] -> :ok end)
       |> expect(:increment, fn @expected_status_metric, 1, [] -> :ok end)
 
       {:ok, _} = HTTPoison.get("http://localhost:8300/#{unquote(status_code)}")
