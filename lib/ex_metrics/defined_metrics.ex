@@ -10,7 +10,7 @@ defmodule ExMetrics.DefinedMetrics do
   end
 
   def default_metrics do
-    response_code_metrics() ++ timing_metrics()
+    ["web.request.count"] ++ response_code_metrics() ++ timing_metrics()
   end
 
   defp timing_metrics do
