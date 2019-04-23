@@ -9,13 +9,13 @@ defmodule Test.ExMetrics.DefinedMetrics do
 
   test "logs unspecified metric" do
     assert capture_log(fn ->
-      DefinedMetrics.log_if_undefined_metric(@metric)
-    end) =~ @log_msg
+             DefinedMetrics.log_if_undefined_metric(@metric)
+           end) =~ @log_msg
   end
 
   test "logs unspecified metric when using ExMetrics library interface" do
     assert capture_log(fn ->
-      ExMetrics.increment(@metric)
-    end) =~ @log_msg
+             ExMetrics.increment(@metric)
+           end) =~ @log_msg
   end
 end
