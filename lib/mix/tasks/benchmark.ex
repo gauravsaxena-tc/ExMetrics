@@ -10,10 +10,10 @@ defmodule Mix.Tasks.Benchmark do
     Benchee.run(
       %{
         "increment" => fn ->
-          ExMetrics.increment("benchmark.metric")
+          ExMetrics.increment("test_metric_name")
         end,
         "timeframe returns data" => fn ->
-          ExMetrics.timeframe "benchmark.metric" do
+          ExMetrics.timeframe "test_metric_name" do
             @data
           end
         end
