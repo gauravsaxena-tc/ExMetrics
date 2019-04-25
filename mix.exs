@@ -30,7 +30,8 @@ defmodule ExMetrics.MixProject do
       {:plug_cowboy, "~> 2.0.1", only: :test},
       {:mox, "~> 0.5", only: :test},
       {:plug, ">= 1.7.0"},
-      {:statix, ">= 1.1.0"}
+      {:statix, ">= 1.1.0"},
+      {:benchee, ">= 1.0.1"}
     ]
   end
 end
