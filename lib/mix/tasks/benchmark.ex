@@ -1,4 +1,4 @@
-defmodule Mix.Tasks.Benchmark do
+defmodule Mix.Tasks.ExMetricsBenchmark do
   use Mix.Task
   use ExMetrics
 

@@ -13,3 +13,6 @@ config :ex_metrics,
   metrics: ["metric_one", "another_metric"],
   send_metrics: Boolean
 ```
+
+## Run benchmark tests
+`mix ex_metrics_benchmark`
