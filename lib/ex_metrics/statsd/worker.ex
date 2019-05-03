@@ -17,8 +17,8 @@ defmodule ExMetrics.Statsd.Worker do
     {:ok, connection}
   end
 
-  def start_link do
-    GenServer.start_link(__MODULE__, :ok, name: __MODULE__)
+  def start_link(_) do
+    GenServer.start_link(__MODULE__, :ok, [])
   end
 
   def handle_cast({statix_command, [metric, value, opts]}, connection) do

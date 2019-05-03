@@ -31,6 +31,7 @@ defmodule ExMetrics.MixProject do
       {:mox, "~> 0.5", only: :test},
       {:plug, ">= 1.7.0"},
       {:statix, ">= 1.1.0"},
+      {:poolboy, "~> 1.5.1"},
       {:benchee, ">= 1.0.1", only: :dev}
     ]
   end

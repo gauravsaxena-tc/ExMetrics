@@ -20,10 +20,17 @@ defmodule ExMetrics.Application do
   end
 
   defp children(_) do
-    import Supervisor.Spec
-
     [
-      worker(ExMetrics.Statsd.Worker, [])
+      :poolboy.child_spec(:statsd_worker, poolboy_config())
+    ]
+  end
+
+  defp poolboy_config do
+    [
+      {:name, {:local, :statsd_worker}},
+      {:worker_module, ExMetrics.Statsd.Worker},
+      {:size, Application.get_env(:ex_metrics, :worker_pool_size)},
+      {:max_overflow, Application.get_env(:ex_metrics, :worker_max_overflow)}
     ]
   end
 end

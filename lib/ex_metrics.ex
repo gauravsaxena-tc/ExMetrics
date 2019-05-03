@@ -8,9 +8,12 @@ defmodule ExMetrics do
     def unquote(stat_type)(metric, value \\ 1, opts \\ []) do
       DefinedMetrics.log_if_undefined_metric(metric)
 
-      GenServer.cast(
-        ExMetrics.Statsd.Worker,
-        {unquote(stat_type), [metric, Kernel.trunc(value), opts]}
+      :poolboy.transaction(
+        :statsd_worker,
+        fn pid ->
+          GenServer.cast(pid, {unquote(stat_type), [metric, Kernel.trunc(value), opts]})
+        end,
+        Application.get_env(:ex_metrics, :worker_timeout)
       )
     end
   end)

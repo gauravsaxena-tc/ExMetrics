@@ -20,7 +20,7 @@ defmodule Test.ExMetrics do
     |> expect(:timing, fn "test_metric_name", 10, @expected_options -> :ok end)
 
     assert :ok == ExMetrics.timing("test_metric_name", 10)
-    Helper.wait_for_cast(ExMetrics.Statsd.Worker)
+    Helper.wait_for_cast()
   end
 
   test "can specify statix options" do
@@ -28,7 +28,7 @@ defmodule Test.ExMetrics do
     |> expect(:increment, fn "test_metric_name", 5, @expected_options_with_sample_rate -> :ok end)
 
     assert :ok == ExMetrics.increment("test_metric_name", 5, sample_rate: 0.5)
-    Helper.wait_for_cast(ExMetrics.Statsd.Worker)
+    Helper.wait_for_cast()
   end
 
   test "can increment metrics" do
@@ -36,7 +36,7 @@ defmodule Test.ExMetrics do
     |> expect(:increment, fn "test_metric_name", 5, @expected_options -> :ok end)
 
     assert :ok == ExMetrics.increment("test_metric_name", 5)
-    Helper.wait_for_cast(ExMetrics.Statsd.Worker)
+    Helper.wait_for_cast()
   end
 
   test "converts floats to integers" do
@@ -44,7 +44,7 @@ defmodule Test.ExMetrics do
     |> expect(:timing, fn "test_metric_name", 5, @expected_options -> :ok end)
 
     assert :ok == ExMetrics.timing("test_metric_name", 5.37)
-    Helper.wait_for_cast(ExMetrics.Statsd.Worker)
+    Helper.wait_for_cast()
   end
 
   test "can decrement metrics" do
@@ -52,7 +52,7 @@ defmodule Test.ExMetrics do
     |> expect(:decrement, fn "test_metric_name", 5, @expected_options -> :ok end)
 
     assert :ok == ExMetrics.decrement("test_metric_name", 5)
-    Helper.wait_for_cast(ExMetrics.Statsd.Worker)
+    Helper.wait_for_cast()
   end
 
   test "can gauge metrics" do
@@ -60,7 +60,7 @@ defmodule Test.ExMetrics do
     |> expect(:gauge, fn "test_metric_name", 5, @expected_options -> :ok end)
 
     assert :ok == ExMetrics.gauge("test_metric_name", 5)
-    Helper.wait_for_cast(ExMetrics.Statsd.Worker)
+    Helper.wait_for_cast()
   end
 
   test "can set metrics" do
@@ -68,7 +68,7 @@ defmodule Test.ExMetrics do
     |> expect(:set, fn "test_metric_name", 5, @expected_options -> :ok end)
 
     assert :ok == ExMetrics.set("test_metric_name", 5)
-    Helper.wait_for_cast(ExMetrics.Statsd.Worker)
+    Helper.wait_for_cast()
   end
 
   test "can record histogram" do
@@ -76,7 +76,7 @@ defmodule Test.ExMetrics do
     |> expect(:histogram, fn "test_metric_name", 5, @expected_options -> :ok end)
 
     assert :ok == ExMetrics.histogram("test_metric_name", 5)
-    Helper.wait_for_cast(ExMetrics.Statsd.Worker)
+    Helper.wait_for_cast()
   end
 
   test "can time snippets of code" do
@@ -90,6 +90,6 @@ defmodule Test.ExMetrics do
       end
 
     assert result == "pass on this result"
-    Helper.wait_for_cast(ExMetrics.Statsd.Worker)
+    Helper.wait_for_cast()
   end
 end
