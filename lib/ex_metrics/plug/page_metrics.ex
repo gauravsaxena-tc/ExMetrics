@@ -14,7 +14,7 @@ defmodule ExMetrics.Plug.PageMetrics do
       time_ms = diff / 1_000
 
       ExMetrics.increment(metric_name <> ".#{conn.status}" <> ".count")
-      #ExMetrics.timing(metric_name <> ".#{conn.status}", time_ms)
+      ExMetrics.timing(metric_name <> ".#{conn.status}", time_ms)
       conn
     end)
   end
