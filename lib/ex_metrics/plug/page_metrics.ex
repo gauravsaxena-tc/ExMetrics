@@ -14,14 +14,14 @@ defmodule ExMetrics.Plug.PageMetrics do
       time_ms = diff / 1_000
 
       ExMetrics.increment(metric_name <> ".#{conn.status}" <> ".count")
-      ExMetrics.timing(metric_name <> ".#{conn.status}", time_ms)
+      ExMetrics.timing(metric_name <> ".#{conn.status}" <> ".time", time_ms)
       conn
     end)
   end
 
   @spec get_metric_name(Plug.Conn.t()) :: String.t()
   defp get_metric_name(conn) do
-    "response_time#{metric_name_from_request_path(conn.request_path)}"
+    metric_name_from_request_path(conn.request_path)
   end
 
   @spec metric_name_from_request_path(String.t()) :: String.t()
