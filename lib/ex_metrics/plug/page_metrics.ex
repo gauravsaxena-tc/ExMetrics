@@ -6,6 +6,7 @@ defmodule ExMetrics.Plug.PageMetrics do
 
   def call(conn, _opts) do
     metric_name = get_metric_name(conn)
+    metric_name = String.slice(metric_name, 1, String.length(metric_name))
     before_time = :os.timestamp()
 
     register_before_send(conn, fn conn ->
@@ -13,8 +14,8 @@ defmodule ExMetrics.Plug.PageMetrics do
       diff = :timer.now_diff(after_time, before_time)
       time_ms = diff / 1_000
 
-      ExMetrics.increment(metric_name <> ".#{conn.status}" <> ".count")
-      ExMetrics.timing(metric_name <> ".#{conn.status}" <> ".time", time_ms)
+      ExMetrics.increment(metric_name <> ".#{conn.status}" <> ".count", 1)
+      ExMetrics.histogram(metric_name <> ".#{conn.status}" <> ".time", time_ms)
       conn
     end)
   end
