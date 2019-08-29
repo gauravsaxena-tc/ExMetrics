@@ -14,8 +14,8 @@ defmodule ExMetrics.Plug.PageMetrics do
       diff = :timer.now_diff(after_time, before_time)
       time_ms = diff / 1_000
 
-      ExMetrics.increment(metric_name <> ".#{conn.status}" <> ".count", 1)
-      ExMetrics.histogram(metric_name <> ".#{conn.status}" <> ".time", time_ms)
+      ExMetrics.increment(metric_name <> ".#{conn.status}" <> ".count", 1, sample_rate: 1)
+      ExMetrics.histogram(metric_name <> ".#{conn.status}" <> ".time", time_ms, sample_rate: 1)
       conn
     end)
   end
